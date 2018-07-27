@@ -92,7 +92,7 @@
           <circle id="XMLID_1050_" class="st9" cx="761.8" cy="388.6" r="64.2"/>
         </g>
       </g>
-      <g id="Coffee_Patterns">
+      <g id="Coffee_Waves">
         <g id="XMLID_449_">
           <path id="XMLID_79_" class="st10" d="M770.4,345.8c23.3,4.7,38.3,27.3,33.6,50.6"/>
           <path id="XMLID_78_" class="st10" d="M756.7,426.8c-23.3-4.7-38.3-27.3-33.6-50.6"/>
@@ -338,6 +338,7 @@ export default {
           this.TweenBackground(true),
           this.TweenPapers(true),
           this.TweenCoffee(true),
+          this.TweenCoffeeWaves(true),
           this.TweenPencil(true),
           this.TweenCookie(true),
           this.TweenCrumbs(true),
@@ -350,14 +351,15 @@ export default {
 
         .add(this.TweenBackground)
         .add(this.TweenPapers, '+=1')
-        .add(this.TweenCookie, '+=2.5')
+        .add(this.TweenCookie, '+=1')
         .add(this.TweenCoffee, '+=.25')
-        .add(this.TweenCrumbs, '+=1')
-        .add(this.TweenPencil, '+=.25')
+        .add(this.TweenCrumbs, '+=.25')
+        .add(this.TweenCoffeeWaves, '+=.5')
+        .add(this.TweenPencil, '+=.125')
         .add(this.TweenPins, '+=.25')
-        .add(this.TweenList, '+=1.5')
-        .add(this.TweenTitle, '+=1.5')
-        .add(this.TweenNums, '+=.5')
+        .add(this.TweenList, '+=.5')
+        .add(this.TweenTitle, '+=1.25')
+        .add(this.TweenNums, '+=.25')
         .add(this.TweenLines)
     },
     TweenBackground (tweenSet = false) {
@@ -421,12 +423,12 @@ export default {
         .staggerTo('#Pins > g', .5, {
           opacity: 1,
           scale: 1
-        }, .5)
+        }, .25)
     },
     TweenCoffee (tweenSet = false) {
       if (tweenSet) {
         return TweenMax
-          .set(['#Coffee', '#Coffee_Patterns'], {
+          .set('#Coffee', {
             x: '50%',
             y: '30%',
             rotation: '180deg',
@@ -436,12 +438,28 @@ export default {
       }
 
       return TweenMax
-        .staggerTo(['#Coffee', '#Coffee_Patterns'], 2, {
+        .to('#Coffee', .75, {
           x: '0%',
           y: '0%',
           rotation: '0deg',
           opacity: 1
-        }, 0)
+        })
+    },
+    TweenCoffeeWaves (tweenSet = false) {
+      if (tweenSet) {
+        return TweenMax
+          .set('#Coffee_Waves', {
+            opacity: 0,
+            rotation: '90deg',
+            transformOrigin: 'center'
+          })
+      }
+
+      return TweenMax
+        .to('#Coffee_Waves', .5, {
+          opacity: 1,
+          rotation: '0deg',
+        })
     },
     TweenPencil (tweenSet = false) {
       if (tweenSet) {
@@ -476,14 +494,14 @@ export default {
       }
 
       return TweenMax
-        .staggerTo('#Papers > g', 1.5, {
+        .staggerTo('#Papers > g', 1, {
           x: '0%',
           y: '0%',
           opacity: 1,
           rotation: '0deg',
           transformOrigin: 'center',
           ease: Circ.easeOut
-        }, .75)
+        }, .25)
     },
     TweenList (tweenSet = false) {
       if (tweenSet) {
@@ -495,7 +513,7 @@ export default {
       }
 
       return TweenMax
-        .to('#List', 1.5, {
+        .to('#List', 1.25, {
           y: '0%',
           opacity: 1,
           ease: Elastic.easeOut.config(1, 0.3)
@@ -526,7 +544,7 @@ export default {
       return TweenMax
         .staggerTo('#List_Nums > text', .5, {
           opacity: 1
-        }, .5)
+        }, .3)
     },
     TweenLines (tweenSet = false) {
       if (tweenSet) {
@@ -539,7 +557,7 @@ export default {
       return TweenMax
         .staggerTo('#List_Lines circle', .25, {
           opacity: 1
-        }, .03125)
+        }, .016)
     }
   }
 }
